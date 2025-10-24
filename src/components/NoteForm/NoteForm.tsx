@@ -3,7 +3,7 @@ import css from '../NoteForm/NoteForm.module.css'
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createNote } from '../../services/noteService';
-
+import {type Tag } from '../../types/note';
 
 interface NoteFormProps{
 	onClose: () => void;
@@ -19,7 +19,7 @@ const initialValues: NoteForm={
 	tag: 'Todo',
 }
 
-type Tag = 'Todo'| 'Work'| 'Personal'| 'Meeting'|'Shopping';
+
 const NotesSchema = Yup.object().shape({
 	title: Yup.string()
 		.min(3, 'min 3')
