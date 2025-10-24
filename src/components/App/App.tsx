@@ -14,7 +14,7 @@ export default function App() {
   const [page, setPage] = useState<number>(1);
   const [debounceQuery] = useDebounce(query, 300);
   const [isModalOpen, setIsmodalOpen] = useState<boolean>(false);
-  const [isCreateNote, setIsCreateNote] = useState<boolean>(false);
+  
 
   const { data } = useQuery({
     queryKey: ['notes', debounceQuery, page],
@@ -29,9 +29,7 @@ export default function App() {
   const toggleModal = () => {
     setIsmodalOpen(!isModalOpen);
   };
-  const toggleCreateNote = () => {
-    setIsCreateNote(!isCreateNote);
-  };
+
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ? data.totalPages : 0;
   
@@ -43,14 +41,14 @@ export default function App() {
           <Pagination
             totalPages={totalPages}
             currentPage={page}
-            onPageChenge={setPage}
+            onPageChange={setPage}
           />
         )}
         <button
           className={css.button}
           onClick={() => {
             toggleModal();
-            toggleCreateNote();
+       
           }}
         >
           Create note +
@@ -59,9 +57,9 @@ export default function App() {
       {notes.length > 0 && <NoteList notes={notes} />}
       {isModalOpen && (
         <Modal onClose={toggleModal}>
-			{isCreateNote && <NoteForm onClose={()=>{			
+			{isModalOpen && <NoteForm onClose={()=>{			
 			toggleModal();
-			toggleCreateNote();
+			
 			
 		  }}/>}</Modal>
       )}
